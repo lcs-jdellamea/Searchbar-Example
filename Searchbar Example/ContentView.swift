@@ -12,7 +12,7 @@ struct ContentView: View {
     //MARK: Stored properties
     
     // The list of items to show
-    @State var items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    @State var items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Bananas"]
     
     // The search term the user has provided
     @State var searchText = ""
