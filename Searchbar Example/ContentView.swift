@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-   
+    
     //MARK: Stored properties
     
     // The list of items to show
@@ -18,25 +18,53 @@ struct ContentView: View {
     @State var searchText = ""
     
     //MARK: Computed properties
-   
-    // The possibly-filtered array of items
     
-    var body: some View {
+    // The possibly-filtered array of items
+    var filteredItems: [String] {
         
-        NavigationView {
+        if searchText.isEmpty {
             
-            VStack {
+            return items
             
-                Text("Searching on:\(searchText)")
-                
-                List(items, id: \.self) { currentItem in Text(currentItem)}
+        } else {
             
+            //Create an empty array
+            var matchingItems: [String] =  []
+            
+            //Iterate over original array
+            for item in items {
+                if item.contains(searchText) {
+                    matchingItems.append(item)
+                    if item.lowercased().contains(searchText.lowercased()) {
+                        matchingItems.append(item)
+                    }
                 }
-        .searchable(text: $searchText)
+                
+                //Return the array of items that match the search text
+                return matchingItems
+                
+            }
+            
+        }
         
+        //The user interface
+        var body: some View {
+            
+            NavigationView {
+                
+                VStack {
+                    
+                    Text("Searching on:\(searchText)")
+                    
+                    List(items, id: \.self) { currentItem in Text(currentItem)}
+                    
+                }
+                .searchable(text: $searchText)
+                
             }
         }
-
-    
+        
+        
     }
-
+    
+}
