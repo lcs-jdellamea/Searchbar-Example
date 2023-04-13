@@ -33,38 +33,34 @@ struct ContentView: View {
             
             //Iterate over original array
             for item in items {
-                if item.contains(searchText) {
+                if item.lowercased().contains(searchText.lowercased()) {
                     matchingItems.append(item)
-                    if item.lowercased().contains(searchText.lowercased()) {
-                        matchingItems.append(item)
-                    }
                 }
                 
-                //Return the array of items that match the search text
-                return matchingItems
+            }
+
+            //Return the array of items that match the search text
+            return matchingItems
+            
+
+        }
+    }
+    
+    //The user interface
+    var body: some View {
+        
+        NavigationView {
+            
+            VStack {
+                
+                Text("Searching on:\(searchText)")
+                
+                List(filteredItems, id: \.self) { currentItem in Text(currentItem)}
                 
             }
+            .searchable(text: $searchText)
             
         }
-        
-        //The user interface
-        var body: some View {
-            
-            NavigationView {
-                
-                VStack {
-                    
-                    Text("Searching on:\(searchText)")
-                    
-                    List(items, id: \.self) { currentItem in Text(currentItem)}
-                    
-                }
-                .searchable(text: $searchText)
-                
-            }
-        }
-        
-        
     }
     
 }
